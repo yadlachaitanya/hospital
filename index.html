@@ -5,28 +5,133 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Hospital Dashboard</title>
   <style>
-    /* --- CSS Styling --- */
     * {
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
       font-family: "Segoe UI", sans-serif;
     }
 
     body {
-      background: #f4f6f9;
+      background-color: #f4f6f9;
       color: #333;
     }
 
-    header {
+    /* ---------------- NAVBAR ---------------- */
+    .navbar {
       background-color: #00695c;
       color: white;
-      padding: 20px 40px;
-      text-align: center;
+      padding: 10px 30px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
     }
 
-    header h1 {
-      font-size: 2.2rem;
+    .navbar .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .navbar img {
+      width: 40px;
+    }
+
+    .navbar h1 {
+      font-size: 1.8rem;
+    }
+
+    .nav-menu {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+
+    .dropdown {
+      position: relative;
+      display: inline-block;
+    }
+
+    .dropbtn {
+      background-color: #004d40;
+      color: white;
+      padding: 8px 12px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: white;
+      color: black;
+      min-width: 160px;
+      box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+      z-index: 1;
+      border-radius: 5px;
+    }
+
+    .dropdown-content a {
+      padding: 10px 16px;
+      display: block;
+      text-decoration: none;
+      color: black;
+    }
+
+    .dropdown-content a:hover {
+      background-color: #eee;
+    }
+
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+
+    /* ---------------- LOGIN PAGE ---------------- */
+    #loginPage {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .login-box {
+      background: white;
+      padding: 40px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      border-radius: 10px;
+      text-align: center;
+      max-width: 400px;
+      width: 100%;
+    }
+
+    .login-box h2 {
+      margin-bottom: 20px;
+      color: #00695c;
+    }
+
+    .login-box input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .login-box button {
+      background-color: #00695c;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      width: 100%;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    /* ---------------- DASHBOARD ---------------- */
+    #dashboard {
+      display: none;
     }
 
     .container {
@@ -50,6 +155,11 @@
       border-radius: 10px;
       box-shadow: 0 4px 8px rgba(0,0,0,0.05);
       text-align: center;
+    }
+
+    .card img {
+      width: 50px;
+      margin-bottom: 10px;
     }
 
     .card h2 {
@@ -102,59 +212,87 @@
 </head>
 <body>
 
-  <!-- Header -->
-  <header>
-    <h1>🏥 Hospital Management Dashboard</h1>
-    <p>Monitor key information and hospital operations</p>
-  </header>
+  <!-- ------------------ LOGIN PAGE ------------------ -->
+  <section id="loginPage">
+    <div class="login-box">
+      <h2>Hospital Admin Login</h2>
+      <input type="text" id="username" placeholder="Username" />
+      <input type="password" id="password" placeholder="Password" />
+      <button onclick="login()">Login</button>
+    </div>
+  </section>
 
-  <!-- Dashboard Container -->
-  <div class="container">
-
-    <!-- Cards Summary -->
-    <div class="cards">
-      <div class="card">
-        <h2 id="patientCount">0</h2>
-        <p>Total Patients</p>
+  <!-- ------------------ DASHBOARD PAGE ------------------ -->
+  <section id="dashboard">
+    <!-- Navbar -->
+    <div class="navbar">
+      <div class="logo">
+        <img src="https://cdn-icons-png.flaticon.com/512/2798/2798030.png" alt="Hospital Logo" />
+        <h1>HealthCare+ Dashboard</h1>
       </div>
-      <div class="card">
-        <h2 id="doctorCount">0</h2>
-        <p>Total Doctors</p>
-      </div>
-      <div class="card">
-        <h2 id="appointmentsToday">0</h2>
-        <p>Appointments Today</p>
+      <div class="nav-menu">
+        <div class="dropdown">
+          <button class="dropbtn">Menu</button>
+          <div class="dropdown-content">
+            <a href="#">Patients</a>
+            <a href="#">Doctors</a>
+            <a href="#">Appointments</a>
+          </div>
+        </div>
       </div>
     </div>
 
-    <!-- Patient Table -->
-    <div class="table-section">
-      <h2>👨‍⚕️ Current Patients</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Age</th>
-            <th>Condition</th>
-            <th>Doctor</th>
-          </tr>
-        </thead>
-        <tbody id="patientTable">
-          <!-- JS will inject rows here -->
-        </tbody>
-      </table>
+    <!-- Main Dashboard -->
+    <div class="container">
+      <div class="cards">
+        <div class="card">
+          <img src="https://cdn-icons-png.flaticon.com/512/726/726448.png" alt="Patients" />
+          <h2 id="patientCount">0</h2>
+          <p>Total Patients</p>
+        </div>
+        <div class="card">
+          <img src="https://cdn-icons-png.flaticon.com/512/387/387561.png" alt="Doctors" />
+          <h2 id="doctorCount">0</h2>
+          <p>Total Doctors</p>
+        </div>
+        <div class="card">
+          <img src="https://cdn-icons-png.flaticon.com/512/2810/2810374.png" alt="Appointments" />
+          <h2 id="appointmentsToday">0</h2>
+          <p>Appointments Today</p>
+        </div>
+      </div>
+
+      <div class="table-section">
+        <h2>👨‍⚕️ Current Patients</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Age</th>
+              <th>Condition</th>
+              <th>Doctor</th>
+            </tr>
+          </thead>
+          <tbody id="patientTable">
+            <!-- Filled via JS -->
+          </tbody>
+        </table>
+      </div>
     </div>
 
-  </div>
+    <!-- Footer -->
+    <footer>
+      <p>© 2025 HealthCare+ | Hospital Admin Dashboard</p>
+    </footer>
+  </section>
 
-  <!-- Footer -->
-  <footer>
-    <p>© 2025 Hospital Dashboard | Designed for Healthcare Efficiency</p>
-  </footer>
-
-  <!-- JavaScript Logic -->
+  <!-- ------------------ JAVASCRIPT ------------------ -->
   <script>
-    // Sample Data
+    // Demo Credentials
+    const demoUsername = "admin";
+    const demoPassword = "12345";
+
+    // Sample Patient Data
     const patients = [
       { name: "Ravi Kumar", age: 45, condition: "Diabetes", doctor: "Dr. Mehta" },
       { name: "Anita Sharma", age: 29, condition: "Pregnancy", doctor: "Dr. Singh" },
@@ -166,34 +304,38 @@
     const totalDoctors = 12;
     const todayAppointments = 27;
 
-    // DOM Elements
-    const patientTable = document.getElementById('patientTable');
-    const patientCountEl = document.getElementById('patientCount');
-    const doctorCountEl = document.getElementById('doctorCount');
-    const appointmentsEl = document.getElementById('appointmentsToday');
+    function login() {
+      const user = document.getElementById("username").value;
+      const pass = document.getElementById("password").value;
 
-    // Render Data
-    function renderDashboard() {
-      // Update cards
-      patientCountEl.textContent = patients.length;
-      doctorCountEl.textContent = totalDoctors;
-      appointmentsEl.textContent = todayAppointments;
-
-      // Fill patient table
-      patients.forEach(patient => {
-        const row = document.createElement('tr');
-        row.innerHTML = `
-          <td>${patient.name}</td>
-          <td>${patient.age}</td>
-          <td>${patient.condition}</td>
-          <td>${patient.doctor}</td>
-        `;
-        patientTable.appendChild(row);
-      });
+      if (user === demoUsername && pass === demoPassword) {
+        document.getElementById("loginPage").style.display = "none";
+        document.getElementById("dashboard").style.display = "block";
+        renderDashboard();
+      } else {
+        alert("Invalid credentials. Try admin / 12345");
+      }
     }
 
-    // Initialize
-    renderDashboard();
+    function renderDashboard() {
+      document.getElementById("patientCount").textContent = patients.length;
+      document.getElementById("doctorCount").textContent = totalDoctors;
+      document.getElementById("appointmentsToday").textContent = todayAppointments;
+
+      const table = document.getElementById("patientTable");
+      table.innerHTML = "";
+
+      patients.forEach(p => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${p.name}</td>
+          <td>${p.age}</td>
+          <td>${p.condition}</td>
+          <td>${p.doctor}</td>
+        `;
+        table.appendChild(row);
+      });
+    }
   </script>
 </body>
 </html>
