@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Hospital Dashboard</title>
+  <style>
+    /* --- CSS Styling --- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Segoe UI", sans-serif;
+    }
+
+    body {
+      background: #f4f6f9;
+      color: #333;
+    }
+
+    header {
+      background-color: #00695c;
+      color: white;
+      padding: 20px 40px;
+      text-align: center;
+    }
+
+    header h1 {
+      font-size: 2.2rem;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 30px auto;
+      padding: 0 20px;
+    }
+
+    .cards {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      margin-bottom: 30px;
+    }
+
+    .card {
+      background: white;
+      flex: 1 1 250px;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+      text-align: center;
+    }
+
+    .card h2 {
+      font-size: 2rem;
+      color: #00796b;
+    }
+
+    .card p {
+      font-size: 1.1rem;
+      margin-top: 10px;
+      color: #555;
+    }
+
+    .table-section {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+
+    th, td {
+      padding: 12px;
+      border-bottom: 1px solid #ddd;
+      text-align: left;
+    }
+
+    thead {
+      background-color: #b2dfdb;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: #777;
+      margin-top: 40px;
+    }
+
+    @media (max-width: 768px) {
+      .cards {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <h1>🏥 Hospital Management Dashboard</h1>
+    <p>Monitor key information and hospital operations</p>
+  </header>
+
+  <!-- Dashboard Container -->
+  <div class="container">
+
+    <!-- Cards Summary -->
+    <div class="cards">
+      <div class="card">
+        <h2 id="patientCount">0</h2>
+        <p>Total Patients</p>
+      </div>
+      <div class="card">
+        <h2 id="doctorCount">0</h2>
+        <p>Total Doctors</p>
+      </div>
+      <div class="card">
+        <h2 id="appointmentsToday">0</h2>
+        <p>Appointments Today</p>
+      </div>
+    </div>
+
+    <!-- Patient Table -->
+    <div class="table-section">
+      <h2>👨‍⚕️ Current Patients</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Condition</th>
+            <th>Doctor</th>
+          </tr>
+        </thead>
+        <tbody id="patientTable">
+          <!-- JS will inject rows here -->
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2025 Hospital Dashboard | Designed for Healthcare Efficiency</p>
+  </footer>
+
+  <!-- JavaScript Logic -->
+  <script>
+    // Sample Data
+    const patients = [
+      { name: "Ravi Kumar", age: 45, condition: "Diabetes", doctor: "Dr. Mehta" },
+      { name: "Anita Sharma", age: 29, condition: "Pregnancy", doctor: "Dr. Singh" },
+      { name: "Sunil Verma", age: 65, condition: "Heart Checkup", doctor: "Dr. Roy" },
+      { name: "Pooja Patel", age: 32, condition: "Migraine", doctor: "Dr. Khan" },
+      { name: "Amit Joshi", age: 50, condition: "Back Pain", doctor: "Dr. Das" },
+    ];
+
+    const totalDoctors = 12;
+    const todayAppointments = 27;
+
+    // DOM Elements
+    const patientTable = document.getElementById('patientTable');
+    const patientCountEl = document.getElementById('patientCount');
+    const doctorCountEl = document.getElementById('doctorCount');
+    const appointmentsEl = document.getElementById('appointmentsToday');
+
+    // Render Data
+    function renderDashboard() {
+      // Update cards
+      patientCountEl.textContent = patients.length;
+      doctorCountEl.textContent = totalDoctors;
+      appointmentsEl.textContent = todayAppointments;
+
+      // Fill patient table
+      patients.forEach(patient => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${patient.name}</td>
+          <td>${patient.age}</td>
+          <td>${patient.condition}</td>
+          <td>${patient.doctor}</td>
+        `;
+        patientTable.appendChild(row);
+      });
+    }
+
+    // Initialize
+    renderDashboard();
+  </script>
+</body>
+</html>
